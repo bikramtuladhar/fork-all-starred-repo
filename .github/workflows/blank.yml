@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 env:
-  super_secret: ${{ secrets.github_token }}
+  super_secret: ${{ secrets.token }}
 
 jobs:
   build:
