@@ -1,7 +1,6 @@
 name: CI
 
 on:
-  push:
   schedule:
     - cron: "0 */8 * * *"
 
