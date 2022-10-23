@@ -16,7 +16,7 @@ while STARS=$(curl -u "bikramtuladhar:$super_secret" -s "https://api.github.com/
 		  -H "Accept: application/vnd.github+json" \
 		  -H "Authorization: Bearer $super_secret" \
 		  "https://api.github.com/repos/$star/forks" \
-		  -d '{"organization":"'$org'","name":"'$name'","default_branch_only":true}'
+		  -d '{"organization":"'$org'","name":"'$name'","default_branch_only":true}' > /dev/null
         
         sleep 10
 
