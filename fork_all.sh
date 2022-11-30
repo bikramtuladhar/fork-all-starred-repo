@@ -11,6 +11,8 @@ while STARS=$(curl -u "bikramtuladhar:$super_secret" -s "https://api.github.com/
 	do
 		name=${star#*/}
 
+		echo "forking: $org/$name \n";
+
 		curl \
 		  -X POST \
 		  -H "Accept: application/vnd.github+json" \
@@ -20,14 +22,16 @@ while STARS=$(curl -u "bikramtuladhar:$super_secret" -s "https://api.github.com/
 
         sleep 4
 	
-	default_branch=$(curl -u "bikramtuladhar:$super_secret" -s "https://api.github.com/repos/$org/$name" | jq ".default_branch")
-	
+		default_branch=$(curl -u "bikramtuladhar:$super_secret" -s "https://api.github.com/repos/$org/$name" | jq ".default_branch")
+		
+		echo "default branch for $org/$name is $default_branch \n";
+
         curl \
         -X POST \
         -H "Accept: application/vnd.github+json" \
         -H "Authorization: Bearer $super_secret" \
         "https://api.github.com/repos/$org/$name/merge-upstream" \
-        -d '{"branch":"$default_branch"}' 
+        -d '{"branch":"'$default_branch'"}' 
         
         sleep 3
 
@@ -37,6 +41,8 @@ while STARS=$(curl -u "bikramtuladhar:$super_secret" -s "https://api.github.com/
 			
 			for workflow_id in "${workflow_ids_array[@]}"
 			do
+				echo "disabling workflow $workflow_id for $org/$name \n";
+
 				curl \
 				  -X PUT \
 				  -H "Accept: application/vnd.github+json" \
