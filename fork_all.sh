@@ -38,7 +38,7 @@ while STARS=$(curl -u "bikramtuladhar:$super_secret" -s "https://api.github.com/
         
         sleep 3
 
-	    workflow_ids=$(curl -u "bikramtuladhar:$super_secret" -s "https://api.github.com/repos/cloudnepal/supabase/actions/workflows" | jq '.workflows[].id' )
+	    workflow_ids=$(curl -u "bikramtuladhar:$super_secret" -s "https://api.github.com/repos/$org/$name/actions/workflows" | jq '.workflows[].id' )
 	  
 		workflow_ids_array=($workflow_ids)
 			
@@ -48,7 +48,7 @@ while STARS=$(curl -u "bikramtuladhar:$super_secret" -s "https://api.github.com/
 				  -X PUT \
 				  -H "Accept: application/vnd.github+json" \
 				  -H "Authorization: Bearer $super_secret" \
-			  		https://api.github.com/repos/$org/$name/actions/workflows/$workflow_id/disable
+			  		"https://api.github.com/repos/$org/$name/actions/workflows/$workflow_id/disable"
 				sleep 2
 		  	done
 
