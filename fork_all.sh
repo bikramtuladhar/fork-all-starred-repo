@@ -19,22 +19,15 @@ while STARS=$(curl -u "bikramtuladhar:$super_secret" -s "https://api.github.com/
 		  -d '{"organization":"'$org'","name":"'$name'","default_branch_only":true}' > /dev/null
 
         sleep 4
-
+	
+	default_branch=$(curl -u "bikramtuladhar:$super_secret" -s "https://api.github.com/repos/$org/$name" | jq ".default_branch")
+	
         curl \
         -X POST \
         -H "Accept: application/vnd.github+json" \
         -H "Authorization: Bearer $super_secret" \
         "https://api.github.com/repos/$org/$name/merge-upstream" \
-        -d '{"branch":"main"}' 
-
-        sleep 3
-
-        curl \
-        -X POST \
-        -H "Accept: application/vnd.github+json" \
-        -H "Authorization: Bearer $super_secret" \
-        "https://api.github.com/repos/$org/$name/merge-upstream" \
-        -d '{"branch":"master"}'
+        -d '{"branch":"$default_branch"}' 
         
         sleep 3
 
